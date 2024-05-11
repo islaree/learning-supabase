@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { type User } from '@supabase/supabase-js'
-import Avatar from './avatar'
-import { Input } from 'postcss'
 
 export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClient()
@@ -14,7 +12,6 @@ export default function AccountForm({ user }: { user: User | null }) {
   const getData = useCallback(async () => {
     let { data } = await supabase.from('history').select().eq('user_id', user?.id)
     setArr(data)
-    console.log(data)
   }, [user, supabase])
 
   useEffect(() => {
@@ -27,8 +24,10 @@ export default function AccountForm({ user }: { user: User | null }) {
 
   return (
     <>
-      <div>aslkj</div>
-      <div>{arr.length} times</div>
+      <div>{user?.id}</div>
+      <div>{user?.email}</div>
+      <img src={user?.user_metadata?.avatar_url} alt="avatar icon" />
+      <div>{arr?.length} times</div>
       {arr?.map((a: any) => (
         <div key={a.id}>
           <div>
